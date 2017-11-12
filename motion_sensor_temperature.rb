@@ -4,6 +4,8 @@ require 'uri'
 require 'openssl'
 require 'pp'
 
+BASE_URL = 'https://api.prod.bgchprod.info/omnia'
+
 def process(node)
     unless node['attributes']['temperature'].nil?
         device = node['name']
@@ -12,14 +14,14 @@ def process(node)
     end
 end
 
-uri = URI.parse("https://api.prod.bgchprod.info/omnia/nodes")
+uri = URI.parse("#{BASE_URL}/nodes")
 request = Net::HTTP::Get.new(uri)
-request["Accept"] = "application/vnd.alertme.zoo-6.0.0+json"
-request["X-Omnia-Client"] = "swagger"
-request["X-Omnia-Access-Token"] = ENV['MY_API_TOKEN']
+request['Accept'] = 'application/vnd.alertme.zoo-6.0.0+json'
+request['X-Omnia-Client'] = 'swagger'
+request['X-Omnia-Access-Token'] = ENV['MY_API_TOKEN']
 
 req_options = {
-  use_ssl: uri.scheme == "https",
+  use_ssl: uri.scheme == 'https',
   verify_mode: OpenSSL::SSL::VERIFY_NONE,
 }
 
