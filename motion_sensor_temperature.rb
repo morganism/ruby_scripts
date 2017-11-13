@@ -3,6 +3,8 @@ require 'net/http'
 require 'uri'
 require 'openssl'
 require 'pp'
+require 'optparse'
+require 'ostruct'
 
 BASE_URL = 'https://api.prod.bgchprod.info/omnia'
 
