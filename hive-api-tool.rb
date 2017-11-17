@@ -20,25 +20,34 @@ class HiveApiTool
     @resource = options.resource
   end
 
-  def parse
-      uri = URI.parse("#{BASE_URL}/#{@resource}")
-      request = Net::HTTP::Get.new(uri)
-      request['Accept'] = 'application/vnd.alertme.zoo-6.0.0+json'
-      request['X-Omnia-Client'] = 'swagger'
-      request['X-Omnia-Access-Token'] = @api_token
-
-      req_options = {
-        use_ssl: uri.scheme == 'https',
-        verify_mode: OpenSSL::SSL::VERIFY_NONE,
-      }
-
-      response = Net::HTTP.start(uri.hostname, uri.port, req_options) do |http|
-        http.request(request)
-      end
+  def json
+    JSON.parse(parse.response.body)
   end
 
-  def do
+  def to_s
     puts (JSON.pretty_generate JSON.parse(parse.response.body))
+  end
+  alias_method :print, :to_s # provide convenience method
+
+  private
+
+  def parse
+    uri = URI.parse("#{BASE_URL}/#{@resource}")
+    request = Net::HTTP::Get.new(uri)
+    request['Accept'] = 'application/vnd.alertme.zoo-6.5.0+json'
+    request['X-Omnia-Client'] = 'swagger'
+    request['X-Omnia-Access-Token'] = @api_token
+
+    response = Net::HTTP.start(uri.hostname, uri.port, req_options(uri)) do |http|
+      http.request(request)
+    end
+  end
+
+  def req_options(uri)
+    {
+        use_ssl: uri.scheme == 'https',
+        verify_mode: OpenSSL::SSL::VERIFY_NONE,
+    }
   end
 end
 
@@ -75,6 +84,6 @@ if __FILE__ == $0
   validate_options(options)
 
   api_tool = HiveApiTool.new(options)
-  api_tool.do
+  api_tool.print
 end
 
