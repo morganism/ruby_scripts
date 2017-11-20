@@ -8,6 +8,11 @@ require 'net/http'
 require 'uri'
 require 'openssl'
 
+
+if ENV['API_TOKEN'].nil?
+     'You need to export MY_API_TOKEN as an environmental variable'
+end
+
 BASE_URL = 'https://api.prod.bgchprod.info/omnia'
 
 def process(node)
@@ -23,7 +28,7 @@ def parse
     request = Net::HTTP::Get.new(uri)
     request['Accept'] = 'application/vnd.alertme.zoo-6.0.0+json'
     request['X-Omnia-Client'] = 'swagger'
-    request['X-Omnia-Access-Token'] = ENV['MY_API_TOKEN']
+    request['X-Omnia-Access-Token'] = ENV['API_TOKEN']
 
     req_options = {
       use_ssl: uri.scheme == 'https',

@@ -20,8 +20,12 @@ class HiveApiTool
     @resource = options.resource
   end
 
-  def json
+  def to_h # returns hash ie: node['attributes']['temperature']['reportedValue']
     JSON.parse(parse.response.body)
+  end
+
+  def to_obj # returns obj.method ie: node.attributes.temperature.reportedValue
+    JSON.parse(parse.response.body, object_class: OpenStruct)
   end
 
   def to_s
