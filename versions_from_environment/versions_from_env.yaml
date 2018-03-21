@@ -1,0 +1,45 @@
+---
+config:
+  sub_domain: "bgchprod.info"
+  environment: "prod"
+  debug: false
+  version: "0.1"
+base:
+  branding: 1.0-b229
+  rabbitmq-plugin: 1.0-b36
+  infrastructure-modules: 1.0-b76
+  provisioning-ec2: 1.0-b1486
+fixed:
+  platform-acceptance: 1.0-b205
+  smoke-test-service: 1.0-b13
+  rabbitmq-kafka-bridge: 1.0-b112
+  feature-toggler: 1.0-b22
+  email-sending-service: 1.0-b47
+  sms-sending-service: 1.0-b66
+  zoo: 1.0-b11679
+  notification-gateway: 
+dns_txt:
+  api: api
+  node-snapshot-persister: nsp
+  node-registry: reg
+  system-alerts-notifier: san
+  trigger-processor: trp
+  software-upgrade-daemon: sud
+  rhc-onboarding-daemon: onb
+  sms-command-processor: smc
+  rules-service: rul
+  hub-connection-notifier: hcn
+  synthetic-device-service: sds
+  push-notification: pns
+  telemetry-collector: tlm
+  tsdb-connector: tsc
+  device-recovery: sdr
+  dispatcher: dispatcher
+  activation: activation
+  hub-migration-service: hms
+  ecosystem: ecosystem
+  state-cache: statecache
+  event-logger: eventlogger
+  edge: edge
+  kafka: kafka
+
